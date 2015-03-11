@@ -7,7 +7,7 @@ class Voter_Model extends CI_Model{
 	}
 
 	function _authenticate($id, $pass){
-			//fitler user input
+		//fitler user input
 		$this->db->where('voter_id', $id);
 		$this->db->where('password', $pass);
 
@@ -21,6 +21,20 @@ class Voter_Model extends CI_Model{
 			return false;
 		}
 	}
+
+	function _isVoted($id){
+		//filter with id
+		$this->db->where('voter_id', $id);
+
+		$q = $this->db->get('voter');
+		$row = $q->row();	
+
+		if($row->voting == "Y"){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	function _addVoter(){
