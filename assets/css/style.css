@@ -1,0 +1,37 @@
+/* Form error message CSS */
+#form_error{
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	
+	background-color: #F57389 !important;
+	border: 1px solid #333333;
+	padding: 0.5em;	
+	font-weight: bold;
+	margin: 1em;
+}
+/* end Login error message CSS */
+
+/* Form error message CSS */
+#form_success{
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	
+	background-color: #EBF8A4 !important;
+	border: 1px solid #A2D246;
+	padding: 0.5em;	
+	font-weight: bold;
+	margin: 1em;
+}
+/* end Login error message CSS */
