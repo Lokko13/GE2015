@@ -23,11 +23,33 @@ CREATE TABLE IF NOT EXISTS `position_lookup` (
   PRIMARY KEY (`position_id`)
 );
 
+INSERT INTO `position_lookup` (`position_id`) VALUES
+('USG President'),
+('VP Externals'),
+('VP Internals'),
+('Executive Secretary'),
+('Executive Treasurer'),
+('STC President'),
+('Legislative Assembly Representative'),
+('CLA Representative'),
+('COE Representative'),
+('COB Representative'),
+('CCS Representative');
+
 CREATE TABLE IF NOT EXISTS `college_lookup` (
   `college_id` varchar(50) NOT NULL,
   `college_name` varchar(50) NOT NULL,
   PRIMARY KEY (`college_id`)
 );
+
+INSERT INTO `college_lookup` (`college_id`, `college_name`) VALUES
+('CCS', 'College of Computer Studies'),
+('CLA', 'College of Liberal Arts'),
+('RVR-COB', 'RVR - College of Business'),
+('GCOE', 'Gokungwei College of Engineering'),
+('SOE', 'School of Education'),
+('COS', 'COS');
+
 -- --------------------------------------------------------
 -- OTHER TABLES
 -- --------------------------------------------------------
@@ -44,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `active_sessions` (
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `admin`(
-  `admin_id` varchar(12) NOT NULL,
+  `admin_id` varchar(50) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `password` varchar(50) NOT NULL,
