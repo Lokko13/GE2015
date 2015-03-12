@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <!-- 
   
   This is the login for the site

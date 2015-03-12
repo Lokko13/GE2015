@@ -2,6 +2,10 @@
 
 class Login extends CI_Controller {
 
+	function __construct(){
+		parent::__construct();
+	}
+	
 	public function index()	{
 		$data['main_content'] = 'login_view';
 		$this->load->view('includes/template', $data);
@@ -34,9 +38,13 @@ class Login extends CI_Controller {
 			else if($this->voter_model->_authenticate($id, $pass)){//authenticate if user is a voter
 				//check if user is still valid for voting
 				if(!$this->voter_model->_isVoted($id)){
+					//get voter etails
+					$voter = $this->voter_model->_getVoter($id);
+					//save voter session
 					$voter_sess = array(
-						'id' => $id,
+						'id' => $voter->voter_id,
 						'is_logged_id' => true,
+						'college' => $voter->college,
 						'is_admin' => false
 					);
 					$this->session->set_userdata($voter_sess);//set sessiondata
