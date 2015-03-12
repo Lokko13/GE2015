@@ -13,17 +13,15 @@ class Voter extends CI_Controller {
 		$data['studentName'] = $this->_getStudentName($this->session->userdata('id'));
 		$data['college'] = $this->session->userdata('college');
 		//candidates
-		$data['usg_pres'] = array('fuck' => array('it' => 'right', 'in'=>'the'), 'pussy'=>array('hard'=>'core'));
-		$data['usg_vp_internal'] = "";
-		$data['usg_vp_external'] = "";
-		$data['usg_vp_external'] = "";
-		$data['usg_treasurer'] = "";
-		$data['usg_secretary'] = "";
-		$data['stc_campus_pres'] = "";
-		$data['stc_college_rep'] = ""; //make function use session
-		$data['stc_la_rep'] = "";
+		$data['usg_pres'] = $this->_get_USG_Pres();
+		$data['usg_vp_internal'] = $this->_get_USG_VPInternal();
+		$data['usg_vp_external'] = $this->_get_USG_VPExternal();
+		$data['usg_treasurer'] = $this->_get_USG_Treasurer();
+		$data['usg_secretary'] = $this->_get_USG_Secretary();
+		$data['stc_campus_pres'] = $this->_get_STC_CampusPres();
+		$data['stc_college_rep'] = $this->_get_STC_CollegeRep($this->session->userdata('college'));
+		$data['stc_la_rep'] = $this->_get_STC_LARep();
 		
-		echo json_encode($data); die();
 		$this->load->view('includes/template', $data);
 	}
 
@@ -37,5 +35,39 @@ class Voter extends CI_Controller {
 
 	function submitVote(){
 		//voteValidationSubmit.php
+	}
+
+	//get candidates functions
+
+	function _get_USG_Pres(){
+		return;
+	}
+
+	function _get_USG_VPInternal(){
+		return;
+	}
+
+	function _get_USG_VPExternal(){
+		return;
+	}
+
+	function _get_USG_Treasurer(){
+		return;
+	}
+
+	function _get_USG_Secretary(){
+		return;
+	}
+
+	function _get_STC_CampusPres(){
+		return;
+	}
+
+	function _get_STC_CollegeRep($college){
+		return;
+	}
+
+	function _get_STC_LARep(){
+		return;
 	}
 }

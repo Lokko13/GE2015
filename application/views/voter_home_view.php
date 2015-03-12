@@ -1,5 +1,6 @@
 <?php include_once('modals/incomplete_ballot_modal.php'); ?>
 
+<script type="text/javascript" src="<?php echo _js_url() . 'valid.js';?>"></script>
 
 <?php
 	$attr = array(
