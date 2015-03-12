@@ -24,10 +24,7 @@ class Voter_Model extends CI_Model{
 
 	function _isVoted($id){
 		//filter with id
-		$this->db->where('voter_id', $id);
-
-		$q = $this->db->get('voter');
-		$row = $q->row();	
+		$row = $this->_getVoter($id);
 
 		if($row->voting == "Y"){
 			return true;
@@ -35,6 +32,12 @@ class Voter_Model extends CI_Model{
 		else{
 			return false;
 		}
+	}
+
+	function _getVoter($id){
+		$this->db->where('voter_id', $id);
+		$q = $this->db->get('voter');
+		return $q->row();	
 	}
 
 	function _addVoter(){
