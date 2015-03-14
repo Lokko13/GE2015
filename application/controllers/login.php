@@ -4,6 +4,10 @@ class Login extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
+		$this->session->unset_userdata('id');
+		$this->session->unset_userdata('is_logged_in');	
+		$this->session->unset_userdata('is_admin');	
+		$this->session->unset_userdata('college');
 	}
 	
 	public function index()	{
@@ -28,7 +32,7 @@ class Login extends CI_Controller {
 				//create session;
 				$admin_sess = array(
 					'id' => $id,
-					'is_logged_id' => true,
+					'is_logged_in' => true,
 					'is_admin' => true
 				);
 				$this->session->set_userdata($admin_sess);//set sessiondata
@@ -43,13 +47,13 @@ class Login extends CI_Controller {
 					//save voter session
 					$voter_sess = array(
 						'id' => $voter->voter_id,
-						'is_logged_id' => true,
+						'is_logged_in' => true,
 						'college' => $voter->college,
 						'is_admin' => false
 					);
 					$this->session->set_userdata($voter_sess);//set sessiondata
 					$this->active_sessions_model->_addSession($id);//insert session in db for tracking
-					redirect(_controller_url() . 'voter');//go to admin homepage	
+					redirect(_controller_url() . 'voter');//go to voter homepage	
 				}
 				else{
 					$this->session->set_flashdata('login_error', 'This ID has already voted!');
