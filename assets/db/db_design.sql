@@ -51,17 +51,6 @@ INSERT INTO `college_lookup` (`college_id`, `college_name`) VALUES
 ('COS', 'COS');
 
 -- --------------------------------------------------------
--- OTHER TABLES
--- --------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `active_sessions` (
-  `session_id` varchar(12) NOT NULL,
-  `session_ip_address` varchar(50) NOT NULL,
-  `timestamp` varchar(255) NOT NULL,
-  PRIMARY KEY (`session_id`)
-);
-
--- --------------------------------------------------------
 -- ENTITIES
 -- --------------------------------------------------------
 
@@ -79,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `voter` (
   `last_name` varchar(20) NOT NULL,
   `college` varchar(50) NOT NULL, -- make a lookup table
   `password` varchar(50) NOT NULL,
-  `voting` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `isVoted` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`voter_id`),
   FOREIGN KEY  (`college`) REFERENCES `college_lookup`(`college_id`)
 );
@@ -93,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `candidate` (
 );
 
 CREATE TABLE IF NOT EXISTS `party` (
-  `party_id` int(1) NOT NULL,
+  `party_id` int(8) NOT NULL,
   `party_name` varchar(20) NOT NULL,
   PRIMARY KEY (`party_id`)
 );
@@ -106,7 +95,6 @@ CREATE TABLE IF NOT EXISTS `party` (
 CREATE TABLE IF NOT EXISTS `party_candidate` (
   `party_id` int(1) NOT NULL,
   `candidate_id` varchar(12) NOT NULL,
-  PRIMARY KEY (`party_id`,`candidate_id`),
   FOREIGN KEY (`candidate_id`) REFERENCES `candidate`(`candidate_id`),
   FOREIGN KEY (`party_id`) REFERENCES `party`(`party_id`)
 );
@@ -114,7 +102,28 @@ CREATE TABLE IF NOT EXISTS `party_candidate` (
 CREATE TABLE IF NOT EXISTS `votes_for` (
   `voter_id` varchar(12) NOT NULL,
   `candidate_id` varchar(12) NOT NULL,
-  PRIMARY KEY (`voter_id`,`candidate_id`),
+  `position` varchar(50) NOT NULL, -- reference lookup table
   FOREIGN KEY (`candidate_id`) REFERENCES `candidate`(`candidate_id`),
+  FOREIGN KEY (`voter_id`) REFERENCES `voter`(`voter_id`),
+  FOREIGN KEY (`position`) REFERENCES `position_lookup`(`position_id`)
+);
+
+-- --------------------------------------------------------
+-- OTHER TABLES
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `abstain_tbl` (
+  `voter_id` varchar(12)  NOT NULL,
+  `position` varchar(50)  NOT NULL,
+  FOREIGN KEY (`voter_id`) REFERENCES `voter`(`voter_id`),
+  FOREIGN KEY (`position`) REFERENCES `position_lookup`(`position_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `active_sessions` (
+  `session_id` varchar(12) NOT NULL,
+  `voter_id` varchar(12) NOT NULL,
+  `session_ip_address` varchar(50) NOT NULL,
+  `timestamp` varchar(255) NOT NULL,
+  PRIMARY KEY (`session_id`),
   FOREIGN KEY (`voter_id`) REFERENCES `voter`(`voter_id`)
 );
