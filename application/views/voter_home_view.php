@@ -90,8 +90,7 @@
 		<tr>
 			<td>
 			<center>
-				<!-- <input type="radio" name="usgpresident" id="abstain" value="pabstain"> -->
-				<input type="radio" name="usgpresident" id="abstain" value="abstain">
+				<input type="radio" name="usgpresident" id="abstain" value="pabstain">
 				<label class="options" for="abstain">
 					<div class="selector_abstain">
 						<span class="abstain">Abstain</span>
@@ -169,8 +168,7 @@
 		<tr>
 			<td>
 			<center>
-				<!-- <input type="radio" name="usgvicepresidentint" id="vabstain" value="viabstain"> -->
-				<input type="radio" name="usgvicepresidentint" id="vabstain" value="abstain">
+				<input type="radio" name="usgvicepresidentint" id="vabstain" value="viabstain">
 				<label class="options" for="vabstain">
 					<div class="selector_abstain">
 						<span class="abstain">Abstain</span>

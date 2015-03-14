@@ -4,7 +4,24 @@ class Voter extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
+		//login and college sessions
+		$is_logged_in_session = $this->session->userdata('is_logged_in');
+		$college_session = $this->session->userdata('college');
+		
+		//check login session
+		if(!isset($is_logged_in_session) || $is_logged_in_session != true){
+			$this->session->set_flashdata('login_error', 'Forced entry! No login detected!');	
+			redirect('login');
+		}
+		else if(!isset($college_session) || $college_session == ""){
+			//check to avoid college errors
+			$this->session->set_flashdata('login_error', 'College not detected, forcibly logged out! Contact an Comelec Officer');	
+			redirect('login');
+		}
+
+		$this->load->model('voter_model');
 		$this->load->model('candidate_model');
+
 	}
 
 	function index(){
@@ -22,12 +39,11 @@ class Voter extends CI_Controller {
 		$data['stc_campus_pres'] = $this->_get_STC_CampusPres();
 		$data['stc_college_rep'] = $this->_get_STC_CollegeRep($this->session->userdata('college'));
 		$data['stc_la_rep'] = $this->_get_STC_LARep();
-		//echo json_encode($data); die();
+
 		$this->load->view('includes/template', $data);
 	}
 
 	function _getStudentName($id){
-		$this->load->model('voter_model');
 		$voter = $this->voter_model->_getVoter($id);
 		$fname = $voter->first_name;
 		$lname = $voter->last_name;
@@ -35,7 +51,22 @@ class Voter extends CI_Controller {
 	}
 
 	function submitVote(){
-		//voteValidationSubmit.php
+		$this->voter_model->_Vote($this->session->userdata('id'), $this->input->post());
+		$this->success();
+	}
+
+	function success(){
+		//logout the user
+		$this->session->unset_userdata('id');
+		$this->session->unset_userdata('is_logged_in');	
+		$this->session->unset_userdata('is_admin');	
+		$this->session->unset_userdata('college');	
+		$this->session->sess_destroy();
+		//load view to show message
+		$data['main_content'] = 'voter_success_view';
+		$this->load->view('includes/template', $data);
+		//redirect with delay
+		header('refresh: 5; url=' . _controller_url() . 'login');
 	}
 
 	//get candidates functions 
@@ -61,7 +92,7 @@ class Voter extends CI_Controller {
 	}
 
 	function _get_STC_CampusPres(){
-		return $this->candidate_model->_getCandidatesFor('Executive Secretary');
+		return $this->candidate_model->_getCandidatesFor('STC President');
 	}
 
 	function _get_STC_CollegeRep($college){

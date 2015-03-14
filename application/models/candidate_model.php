@@ -59,9 +59,10 @@ class Candidate_Model extends CI_Model{
 	}
 
 	function _getCandidate($id){
-		$this->load->model('voter');
+		$this->load->model('voter_model');
 
 		//return candidate array with name TODO
+		//select Fname, Lname, candidate_id, position
 		$this->db->where('candidate_id', $id);
 		$q = $this->db->get('candidate');
 		return $q->row();	
