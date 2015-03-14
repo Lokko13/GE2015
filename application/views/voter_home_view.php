@@ -1,5 +1,3 @@
-<?php include_once('modals/incomplete_ballot_modal.php'); ?>
-
 <script type="text/javascript" src="<?php echo _js_url() . 'valid.js';?>"></script>
 
 <?php
@@ -92,7 +90,8 @@
 		<tr>
 			<td>
 			<center>
-				<input type="radio" name="usgpresident" id="abstain" value="pabstain">
+				<!-- <input type="radio" name="usgpresident" id="abstain" value="pabstain"> -->
+				<input type="radio" name="usgpresident" id="abstain" value="abstain">
 				<label class="options" for="abstain">
 					<div class="selector_abstain">
 						<span class="abstain">Abstain</span>
@@ -170,7 +169,8 @@
 		<tr>
 			<td>
 			<center>
-				<input type="radio" name="usgvicepresidentint" id="vabstain" value="viabstain">
+				<!-- <input type="radio" name="usgvicepresidentint" id="vabstain" value="viabstain"> -->
+				<input type="radio" name="usgvicepresidentint" id="vabstain" value="abstain">
 				<label class="options" for="vabstain">
 					<div class="selector_abstain">
 						<span class="abstain">Abstain</span>
@@ -514,69 +514,51 @@
 		<tr>
 			<td>
 				<center>
-				<table>
-					<tr>
-					<?php
-						
-						/* Query for College Representative */
-						$voterCollege = $college;
-						
-						$q = "SELECT candidate.candidate_id AS ID, voter.first_name AS FName, voter.last_name AS LName, party.party_id AS porder
-								FROM voter, candidate, party_candidate, party
-								WHERE voter.voter_id = candidate.candidate_id
-									AND candidate.candidate_id = party_candidate.candidate_id
-									AND party_candidate.party_id = party.party_id
-									AND candidate.position LIKE '" . $voterCollege . " Representative'
-								ORDER BY porder";
-									
-						$result = mysql_query( $q );
-						
-		
-						$i = 1;
-						$c = 0;
-						while( $candidate = mysql_fetch_array( $result ) )
-						{
-							echo "<td>";
-							echo "<input type=\"radio\" name=\"stccolrep\" value=\"" . $candidate['ID'] . "\" id=\"c". $i . "\">";
-							echo "<label class=\"options\" for=\"c". $i . "\">";
-							echo "<div class=\"selector\">";
-							echo "<span class=\"candname\">";
-						
-							$fullname = $candidate['FName'] . " " . $candidate['LName'] . " ";
-							
-							// Entire name must be 25 characters
-							// Fill with non-breakable space &nbsp;
-							if ( strlen( $fullname ) < 14 )
-							{
-								$halfname = ( 25 - strlen($fullname) ) / 2;
+					<table>
+						<tr>
+						<?php
+							for($c = 0; $c < count($stc_college_rep); $c++){
+								$i = $c+1;
+								echo "<td>";
+									echo "<input type=\"radio\" name=\"stccolrep\" value=\"" . $stc_college_rep[$c]->ID . "\" id=\"c". $i . "\">";
+									echo "<label class=\"options\" for=\"c". $i . "\">";
+
+										//Display names ni nikki and checkmark
+										echo "<div class=\"selector\">";
+											echo "<span class=\"candname\">";
+												$fullname = $stc_college_rep[$c]->FName . " " . $stc_college_rep[$c]->LName . " ";
+												
+												// Entire name must be 25 characters
+												// Fill with non-breakable space &nbsp;
+												if ( strlen( $fullname ) < 14 )
+												{
+													$halfname = (25 - strlen($fullname) ) / 2;
+												}
+												else
+												{
+													$halfname = 1;
+												}
+												
+												for( $x = 0; $x < $halfname; $x++ )
+												{
+													echo "&nbsp;";
+												}
+												
+												echo $fullname;
+												
+												for( $x = 0; $x < $halfname+5; $x++ )
+												{
+													echo "&nbsp;";
+												}
+											
+											echo "</span>";
+											echo "<span class=\"checkmark\">&#10004 </span>"; //checkmark
+										echo "</div>";
+									echo "</label>";
+								echo "</td>";
+								//END Display names ni nikki and checkmark
 							}
-							else
-							{
-								$halfname = 1;
-							}
-							
-							for( $c = 0; $c < $halfname; $c++ )
-							{
-								echo "&nbsp;";
-							}
-							
-							echo $fullname;
-							
-							for( $c = 0; $c < $halfname+5; $c++ )
-							{
-								echo "&nbsp;";
-							}
-						
-							echo "</span>";
-							echo "<span class=\"checkmark\">&#10004 </span>";
-							echo "</div>";
-							echo "</label>";
-							echo "</td>";
-							
-							$i++;
-						}
-					
-						?>
+						?>	
 						</tr>
 					</table>
 				</center>
@@ -692,7 +674,8 @@
 				<button type="button" id="ballotbutton" onclick="submitValidation()" data-toggle="modal" data-target="#confirmBallot">Submit Ballot</button>
 			</td>
 		</tr>
-	</table>	
+	</table>
+	<?php include_once('modals/incomplete_ballot_modal.php'); ?>	
 <?php
 	echo form_close();
 ?>
