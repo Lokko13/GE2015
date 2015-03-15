@@ -11,19 +11,19 @@
 					<li class="divider-vertical"></li>
 					
 					<li class="">
-						<a href="<?php echo _controller_url() . 'admin/ActiveSessions';?>"><i class="icon-file"></i> Active Sessions</a>
+						<a href="<?php echo _controller_url() . 'admin/ActiveSessions';?>"><i class="icon-eye-open"></i> Active Sessions</a>
 					</li>
 					
 					<li class="divider-vertical"></li>
 					
-					<li class="active">
-						<a href="<?php echo _controller_url() . 'admin/ManagementTools';?>"><i class="icon-envelope"></i> Management Tools</a>
+					<li class="">
+						<a href="<?php echo _controller_url() . 'admin/ManagementTools';?>"><i class="icon-th-list"></i> Management Tools</a>
 					</li>
 					
 					<li class="divider-vertical"></li>
                   	
-                  	<li class="">
-                  		<a href="<?php echo _controller_url() . 'admin/VoterTools';?>"><i class="icon-signal"></i> Voter Tools</a>
+                  	<li class="active">
+                  		<a href="<?php echo _controller_url() . 'admin/VoterTools';?>"><i class="icon-user"></i> Voter Tools</a>
               		</li>
 					
 					<li class="divider-vertical"></li>
@@ -31,7 +31,7 @@
 				</ul>
 				<div class="btn-group pull-right">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user"></i> <?php echo "admin_name"; ?><span class="caret"></span>
+						<i class="icon-cog"></i> <?php echo $admin_name; ?><span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo _controller_url() . 'logout'; ?>"><i class="icon-share"></i>Logout</a></li>
@@ -49,16 +49,11 @@
 	<div class="span3"> 
 		<div class="sidebar-nav">
 	        <div class="well" style="width:300px; padding: 8px 0;">
-	    		<ul class="nav nav-list"> 
-					<li class="nav-header">Candidate</li>
-					<li><a href="#">View Candidate</a></li>
-					<li><a href="#">Add Candidate</a></li>
-					<li><a href="#">Remove Candidate</a></li>
-					
-					<li class="nav-header">Party</li>
-					<li><a href="#">View Parties</a></li>
-					<li><a href="#">Add Party</a></li>
-					<li><a href="#">Remove Party</a></li>
+				<ul class="nav nav-list"> 
+					<li class="nav-header">Voter</li>
+					<li class="active"><a href="#">List Voters</a></li>
+					<li class=""><a href="#">View Voter</a></li>
+					<li class=""><a href="#">Voter Ballot</a></li>
 	    		</ul>
 	    	</div>
 	    </div>
