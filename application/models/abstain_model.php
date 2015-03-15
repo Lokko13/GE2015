@@ -29,7 +29,7 @@ class Abstain_Model extends CI_Model{
 				$position = "STC President";
 				break;
 			case 'crabstain' : 
-				$position = $this->_getCollegeRep();
+				$position = $this->_getCollegeRep($college);
 				break;
 			case 'la1Abstain' : 
 				$position = "Legislative Assembly Representative";
