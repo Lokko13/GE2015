@@ -15,6 +15,8 @@ class Voter extends CI_Controller {
 		}
 		else if(!isset($college_session) || $college_session == ""){
 			//check to avoid college errors
+			$this->load->model('active_sessions_model');
+			$this->active_sessions_model->_removeSession($this->session->userdata('id'));
 			$this->session->set_flashdata('login_error', 'College not detected, forcibly logged out! Contact an Comelec Officer');	
 			redirect('login');
 		}

@@ -120,10 +120,9 @@ CREATE TABLE IF NOT EXISTS `abstain_tbl` (
 );
 
 CREATE TABLE IF NOT EXISTS `active_sessions` (
-  `session_id` varchar(12) NOT NULL,
-  `voter_id` varchar(12) NOT NULL,
+  `session_id` varchar(50) NOT NULL,
+  `user_id` varchar(50),
   `session_ip_address` varchar(50) NOT NULL,
   `timestamp` varchar(255) NOT NULL,
-  PRIMARY KEY (`session_id`),
-  FOREIGN KEY (`voter_id`) REFERENCES `voter`(`voter_id`)
+  PRIMARY KEY (`session_id`)
 );
