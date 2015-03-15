@@ -9,7 +9,7 @@ class Active_Sessions_Model extends CI_Model{
 	function _addSession($id){
 		$arr = array(
 			'session_id' => md5($id),
-			'voter_id' => $id,
+			'user_id' => $id,
 			'session_ip_address' => $_SERVER['REMOTE_ADDR'],
 			'timestamp' => time()
 		);
@@ -19,8 +19,27 @@ class Active_Sessions_Model extends CI_Model{
 
 	function _removeSession($id){
 		$this->db->where('session_id', md5($id));
-		$this->db->where('voter_id', $id);
-
+		$this->db->where('user_id', $id);
 		$this->db->delete('active_sessions');
 	}
+
+	function _getActiveSessions(){
+		$q = $this->db->get('active_sessions');
+		return $q->result();
+	}
+
+	function _isSessionActive($id){
+		$this->db->where('session_id', md5($id));
+		$this->db->where('user_id', $id);
+
+		$q = $this->db->get('active_sessions');
+
+		if($q->num_rows == 1){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 }
