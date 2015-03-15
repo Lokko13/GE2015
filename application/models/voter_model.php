@@ -42,7 +42,7 @@ class Voter_Model extends CI_Model{
 
 	function _Vote($curr_user, $postdata){
 		//abstain vote values
-		$abstain_val = ['pabstain', 'viabstain', 'veabstain', 'tabstain', 'sabstain', 'cpabstain', 'crabstain', 'la1Abstain', 'la2Abstain'];
+		$abstain_val = array('pabstain', 'viabstain', 'veabstain', 'tabstain', 'sabstain', 'cpabstain', 'crabstain', 'la1Abstain', 'la2Abstain');
 		
 		$this->load->model('candidate_model');
 		$this->load->model('abstain_model');
@@ -73,7 +73,7 @@ class Voter_Model extends CI_Model{
 				array_push($cast_vote, $x);
 			}
 		}
-		
+
 		if(count($cast_vote) > 0){
 			$this->db->insert_batch('votes_for',$cast_vote);
 		}
