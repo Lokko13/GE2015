@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost:80/GE2015/';
+$config['base_url']	= '/GE2015';
 $config['server_root'] = $_SERVER['DOCUMENT_ROOT'];
 
 /*

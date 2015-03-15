@@ -22,8 +22,10 @@ class Admin_Model extends CI_Model{
 		}
 	}
 
-	function _getAdmin(){
-		return;
+	function _getAdmin($id){
+		$this->db->where('admin_id', $id);
+		$q = $this->db->get('admin');
+		return $q->row();	
 	}
 
 	function _addAdmin(){
