@@ -73,6 +73,7 @@ class Voter_Model extends CI_Model{
 				array_push($cast_vote, $x);
 			}
 		}
+		
 		if(count($cast_vote) > 0){
 			$this->db->insert_batch('votes_for',$cast_vote);
 		}

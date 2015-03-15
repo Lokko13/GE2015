@@ -45,25 +45,5 @@
 	<!--/.navbar-inner -->
 </div>
 <!--/.navbar -->
-<div class="row-fluid">
-	<div class="span3"> 
-		<div class="sidebar-nav">
-	        <div class="well" style="width:300px; padding: 8px 0;">
-	    		<ul class="nav nav-list">
-	    			<li class="active"><a href="#"> Management Tools Home </a></li>
-					<li class="nav-header">Candidate</li>
-					<li><a href="#">View Candidate</a></li>
-					<li><a href="#">Add Candidate</a></li>
-					<li><a href="#">Remove Candidate</a></li>
-					
-					<li class="nav-header">Party</li>
-					<li><a href="#">View Parties</a></li>
-					<li><a href="#">Add Party</a></li>
-					<li><a href="#">Remove Party</a></li>
-	    		</ul>
-	    	</div>
-	    </div>
-	</div>  
 
-	<div class="span9">content</div>
-</div>
+<?php $this->load->view($tool_view); ?>

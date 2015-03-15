@@ -36,8 +36,44 @@ class Admin extends CI_Controller {
 	}
 
 	function ManagementTools(){
+		switch($this->uri->segment(3)){ // gets string after "managementtools" segment in url
+			case 'viewAdmin' : 
+				$tool = 'view_admin_view';
+				break;
+			case 'addAdmin' :
+				$tool = 'add_admin_view';
+				break;
+			case 'removeAdmin' :
+				$tool = 'remove_admin_view';
+				break;
+
+			case 'viewCandidate' : 
+				$tool = 'view_candidate_view';
+				break;
+			case 'addCandidate' :
+				$tool = 'add_candidate_view';
+				break;
+			case 'removeCandidate' :
+				$tool = 'remove_candidate_view';
+				break;
+
+			case 'viewParty' : 
+				$tool = 'view_party_view';
+				break;
+			case 'addParty' :
+				$tool = 'add_party_view';
+				break;
+			case 'removeParty' :
+				$tool = 'remove_party_view';
+				break;
+			default :
+				$tool = 'default';
+				break;
+		}
+
 		$data['main_content'] = 'admin_managementtools_home_view';
 		$data['admin_name'] = $this->_getAdminName();
+		$data['tool_view'] = 'management_tools/' . $tool;
 		$this->load->view('includes/template', $data);	
 	}
 

@@ -54,21 +54,29 @@ class Voter extends CI_Controller {
 
 	function submitVote(){
 		$this->voter_model->_Vote($this->session->userdata('id'), $this->input->post());
-		$this->success();
-	}
-
-	function success(){
 		//logout the user
+		
+		//remove session in db
+		$this->load->model('active_sessions_model');
+		$this->active_sessions_model->_removeSession($this->session->userdata('id')); 
+
+		//remove session
 		$this->session->unset_userdata('id');
 		$this->session->unset_userdata('is_logged_in');	
 		$this->session->unset_userdata('is_admin');	
 		$this->session->unset_userdata('college');	
 		$this->session->sess_destroy();
+		
+
+		$this->success();
+	}
+
+	function success(){
 		//load view to show message
 		$data['main_content'] = 'voter_success_view';
 		$this->load->view('includes/template', $data);
 		//redirect with delay
-		header('refresh: 5; url=' . _controller_url() . 'login');
+		header('refresh: 5; url=' . _controller_url() . 'logout');
 	}
 
 	//get candidates functions 

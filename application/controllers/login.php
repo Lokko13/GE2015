@@ -4,10 +4,16 @@ class Login extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
-		$this->session->unset_userdata('id');
-		$this->session->unset_userdata('is_logged_in');	
-		$this->session->unset_userdata('is_admin');	
-		$this->session->unset_userdata('college');
+		$x = $this->session->userdata('id');
+		if( $x != ""){
+			$this->load->model('active_sessions_model');
+			$this->active_sessions_model->_removeSession($x);
+			$this->session->unset_userdata('id');
+			$this->session->unset_userdata('is_logged_in');	
+			$this->session->unset_userdata('is_admin');	
+			$this->session->unset_userdata('college');			
+			$this->session->sess_destroy();
+		}
 	}
 	
 	public function index()	{
