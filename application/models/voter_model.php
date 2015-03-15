@@ -60,7 +60,8 @@ class Voter_Model extends CI_Model{
 
 			if(in_array($voted_candidate, $abstain_val)){
 				//check if abstained on position
-				$this->abstain_model->_addAbstainVote($curr_user, $voted_candidate, $this->session->userdata('college')); //voter_id, position abstained, user college
+				$c = $this->session->userdata('college');
+				$this->abstain_model->_addAbstainVote($curr_user, $voted_candidate, $c); //voter_id, position abstained, user college
 			}
 			else{
 				//add vote to candidate
@@ -72,8 +73,10 @@ class Voter_Model extends CI_Model{
 				array_push($cast_vote, $x);
 			}
 		}
-		$this->db->insert_batch('votes_for',$cast_vote);
-
+		if(count($cast_vote) > 0){
+			$this->db->insert_batch('votes_for',$cast_vote);
+		}
+		
 		//update voted status
 		$this->db->where('voter_id', $curr_user);
 		$this->db->update('voter', array('isVoted' => 'Y'));
