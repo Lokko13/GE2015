@@ -38,6 +38,8 @@ class Admin extends CI_Controller {
 	function ManagementTools(){
 		switch($this->uri->segment(3)){ // gets string after "managementtools" segment in url
 			case 'viewAdmin' : 
+				$this->load->model('admin_model');
+				$data['all_admin'] = $this->admin_model->_getAllAdmin();
 				$tool = 'view_admin_view';
 				break;
 			case 'addAdmin' :
@@ -48,6 +50,8 @@ class Admin extends CI_Controller {
 				break;
 
 			case 'viewCandidate' : 
+				$this->load->model('candidate_model');
+				$data['all_candidate'] = $this->candidate_model->_getAllCandidates();
 				$tool = 'view_candidate_view';
 				break;
 			case 'addCandidate' :
@@ -58,6 +62,8 @@ class Admin extends CI_Controller {
 				break;
 
 			case 'viewParty' : 
+				$this->load->model('party_model');
+				$data['all_party'] = $this->party_model->_getAllParty();
 				$tool = 'view_party_view';
 				break;
 			case 'addParty' :

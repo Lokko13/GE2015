@@ -25,6 +25,25 @@
 	</div>  
 
 	<div class="span9">
-		ADD CANDIDATE MAIN CONTENT
+		<table class="table table-striped table-condensed">
+			<thead>
+				<tr>
+					<th>Candidate Student ID</th>
+					<th>Candidate Name</th>
+					<th>Candidate Party</th>
+					<th>Candidate Position</th>
+				</tr>
+			</thead>   
+			<tbody>
+				<?php foreach($all_candidate as $single_candidate): ?>
+					<tr>
+						<td><?php echo $single_candidate['candidate_id']; ?></td>
+						<td><?php echo $single_candidate['name']; ?></td>
+						<td><?php echo $single_candidate['party']->party_name; ?></td>
+						<td><?php echo $single_candidate['position']; ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
 	</div>
 </div>

@@ -61,11 +61,33 @@ class Candidate_Model extends CI_Model{
 	function _getCandidate($id){
 		$this->load->model('voter_model');
 
-		//return candidate array with name TODO
-		//select Fname, Lname, candidate_id, position
 		$this->db->where('candidate_id', $id);
 		$q = $this->db->get('candidate');
 		return $q->row();	
+	}
+
+	function _getAllCandidates(){
+		$candidate_list = array();
+
+		$q = $this->db->get('candidate');
+		$candidates = $q->result();
+
+		$this->load->model('voter_model');
+		$this->load->model('party_model');
+
+		foreach($candidates as $candid){
+			$x = $this->voter_model->_getVoter($candid->candidate_id);
+			$party = $this->party_model->_getCandidateParty($candid->candidate_id);
+			$arr = array(
+				'candidate_id' => $candid->candidate_id,
+				'position' => $candid->position,
+				'name' => $x->first_name . " " . $x->last_name,
+				'party' => $party
+			);
+			array_push($candidate_list, $arr);
+		}
+
+		return $candidate_list;
 	}
 
 	function _addCandidate(){

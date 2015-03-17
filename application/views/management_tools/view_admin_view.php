@@ -25,6 +25,27 @@
 	</div>  
 
 	<div class="span9">
-		VIEW ADMIN CONTENT
+		<div class="container">
+	<div class="row">
+		<div class="span12">
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>Admin ID</th>
+						<th>Admin Name</th>
+					</tr>
+				</thead>   
+				<tbody>
+					<?php foreach($all_admin as $singel_admin): ?>
+						<tr>
+							<td><?php echo $singel_admin->admin_id; ?></td>
+							<td><?php echo $singel_admin->first_name . " " . $singel_admin->last_name; ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 	</div>
 </div>

@@ -49,25 +49,25 @@
 
 <div class="container">
 	<div class="row">
-		<div class="span12">    
-      <table class="table table-striped table-condensed">
-        <thead>
-          <tr>
-              <th>Session ID</th>
-              <th>Voter ID</th>
-              <th>IP Address</th>
-          </tr>
-        </thead>   
-        <tbody>
-          <?php foreach($active_sessions as $user_session): ?>
-            <tr>
-              <td><?php echo $user_session->session_id; ?></td>
-              <td><?php echo $user_session->user_id; ?></td>
-              <td><?php echo $user_session->session_ip_address; ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
+		<div class="span12">
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>Session ID</th>
+						<th>Voter ID</th>
+						<th>IP Address</th>
+					</tr>
+				</thead>   
+				<tbody>
+					<?php foreach($active_sessions as $user_session): ?>
+						<tr>
+							<td><?php echo $user_session->session_id; ?></td>
+							<td><?php echo $user_session->user_id; ?></td>
+							<td><?php echo $user_session->session_ip_address; ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>

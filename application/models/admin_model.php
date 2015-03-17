@@ -28,6 +28,11 @@ class Admin_Model extends CI_Model{
 		return $q->row();	
 	}
 
+	function _getAllAdmin(){
+		$q = $this->db->get('admin');
+		return $q->result();	
+	}
+
 	function _addAdmin(){
 		return;
 	}

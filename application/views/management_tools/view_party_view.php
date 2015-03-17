@@ -25,6 +25,21 @@
 	</div>  
 
 	<div class="span9">
-		VIEW PARTY MAIN CONTENT
+		<table class="table table-striped table-condensed">
+			<thead>
+				<tr>
+					<th>Party ID</th>
+					<th>Party Name</th>
+				</tr>
+			</thead>   
+			<tbody>
+				<?php foreach($all_party as $single_party): ?>
+					<tr>
+						<td><?php echo $single_party->party_id; ?></td>
+						<td><?php echo $single_party->party_name; ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
 	</div>
 </div>
