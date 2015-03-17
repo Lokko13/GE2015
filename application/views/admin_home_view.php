@@ -45,462 +45,157 @@
 	<!--/.navbar-inner -->
 </div>
 <!--/.navbar -->
-	
-	<center>
-		<h1>
-			USG GENERAL ELECTIONS 2015
-		</h1>
-		
-		<h2> VOTES SUMMARY </h2>
-		
-		<h4> USG President </h4>
-		
-		<?php 
-		
-			//counter
-			$i = 0; 
+
+<div class="row-fluid">
+	<h1>USG GENERAL ELECTIONS 2015</h1>
 			
-			$usgpres = array();
+	<h5>TOTAL VOTES CASTED : <?php echo $totalVotes;?> </h5>
+	<h5>TOTAL VOTERS : <?php echo $totalVoters;?> </h5>
+	<hr />	
 			
-			//get candidates for USG PRESIDENT
-			$getCandidates = "SELECT voter_id AS ID FROM voter JOIN candidate ON voter.voter_id = candidate_id WHERE position LIKE 'USG President'";
+	<h4> USG President </h4>
+	<table class="table">
+		<tr>
+			<th>Candidate Name</th>
+			<th>Votes</th>
+		</tr>
+
+		<?php foreach($usg_pres_votes as $single_vote) :?>
+			<tr>
+				<td><?php echo $single_vote['name']; ?></td>
+				<td><?php echo $single_vote['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>
+	 
+	<hr />
+	<h4> VP Internals </h4>
+	<table class="table">
+		<tr>
+			<th>Candidate Name</th>
+			<th>Votes</th>
+		</tr>
+
+		<?php foreach($usg_vp_internal_votes as $single_vote) :?>
+			<tr>
+				<td><?php echo $single_vote['name']; ?></td>
+				<td><?php echo $single_vote['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>
+
+	<hr />
+	<h4> VP Externals </h4>
+	<table class="table">
+		<tr>
+			<th>Candidate Name</th>
+			<th>Votes</th>
+		</tr>
+
+		<?php foreach($usg_vp_external_votes as $single_vote) :?>
+			<tr>
+				<td><?php echo $single_vote['name']; ?></td>
+				<td><?php echo $single_vote['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>
 			
-			$getCandidatesDone = mysql_query($getCandidates) or die(mysql_error());
+	<hr />
+	<h4> Executive Treasurer </h4>
+	<table class="table">
+		<tr>
+			<th>Candidate Name</th>
+			<th>Votes</th>
+		</tr>
+
+		<?php foreach($usg_treasurer_votes as $single_vote) :?>
+			<tr>
+				<td><?php echo $single_vote['name']; ?></td>
+				<td><?php echo $single_vote['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>
+
+	<hr />
+	<h4> Executive Secretary </h4>
+	<table class="table">
+		<tr>
+			<th>Candidate Name</th>
+			<th>Votes</th>
+		</tr>
+
+		<?php foreach($usg_secretary_votes as $single_vote) :?>
+			<tr>
+				<td><?php echo $single_vote['name']; ?></td>
+				<td><?php echo $single_vote['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>	
+
+	<hr />		
+	<h4> STC President </h4>
+	<table class="table">
+		<tr>
+			<th>Candidate Name</th>
+			<th>Votes</th>
+		</tr>
+
+		<?php foreach($stc_campus_pres_votes as $single_vote) :?>
+			<tr>
+				<td><?php echo $single_vote['name']; ?></td>
+				<td><?php echo $single_vote['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>	
+
+	<hr />		
+	<h4> Legislative Assembly Representative </h4>
+	<table class="table">
+		<tr>
+			<th>Candidate Name</th>
+			<th>Votes</th>
+		</tr>
+
+		<?php foreach($stc_la_rep_votes as $single_vote) :?>
+			<tr>
+				<td><?php echo $single_vote['name']; ?></td>
+				<td><?php echo $single_vote['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>	
 			
-			while( $row = mysql_fetch_array($getCandidatesDone) )
-			{
-				$usgpres[$i] = $row['ID'];
-				
-				$i++;
-				
-			}
+	<hr />
+	<h4> College Representatives </h4>
 			
-			for($c = 0; $c<count($usgpres); $c++)
-			{
-				//get candidate name
-				$getName = "SELECT CONCAT(last_name, CONCAT(', ', first_name)) AS FULL
-								FROM candidate AS C JOIN voter AS V
-								 ON C.candidate_id = V.voter_id
-								 WHERE C.candidate_id = '". $usgpres[$c] ."'";
-				
-				$getNameDone = mysql_query($getName) or die(mysql_error());
-				
-				$name = mysql_fetch_array($getNameDone);
-				
-				
-				
-				
-				//get vote count of candidates
-				$getCount = "SELECT candidate_id AS CID, COUNT(DISTINCT voter_id) AS C FROM votes_for WHERE candidate_id = '" . $usgpres[$c] ."'";
-				
-				$getCountDone = mysql_query($getCount) or die(mysql_error());
-				
-				$row = mysql_fetch_array($getCountDone);
-				
-				
-				echo $name['FULL'];
-				
-				echo " - ";
-				
-				echo $row['C'];
-				echo "<br>";
-				
-			}
+	<table class="table">
+		<tr>
+			<th>Candidate Name</th>
+			<th>Votes</th>
+			<th>Position</th>
+		</tr>
+
+		<?php foreach($stc_college_rep_votes as $single_vote) :?>
+			<tr>
+				<td><?php echo $single_vote['name']; ?></td>
+				<td><?php echo $single_vote['votes']; ?></td>
+				<td><?php echo $single_vote['position']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>	
+
+	<h4> College Representatives Abstains </h4>
 			
-		?>
-		
-		<h4> VP Internals </h4>
-		
-		<?php 
-		
-			//counter
-			$i = 0; 
-			
-			$usgvpi = array();
-			
-			//get candidates for VP Internals
-			$getCandidates = "SELECT voter_id AS ID FROM voter JOIN candidate ON voter.voter_id = candidate_id WHERE position LIKE 'VP Internals'";
-			
-			$getCandidatesDone = mysql_query($getCandidates) or die(mysql_error());
-			
-			while( $row = mysql_fetch_array($getCandidatesDone) )
-			{
-				$usgvpi[$i] = $row['ID'];
-				
-				$i++;
-				
-			}
-			
-			for($c = 0; $c<count($usgvpi); $c++)
-			{
-				//get candidate name
-				$getName = "SELECT CONCAT(last_name, CONCAT(', ', first_name)) AS FULL
-								FROM candidate AS C JOIN voter AS V
-								 ON C.candidate_id = V.voter_id
-								 WHERE C.candidate_id = '". $usgvpi[$c] ."'";
-				
-				$getNameDone = mysql_query($getName) or die(mysql_error());
-				
-				$name = mysql_fetch_array($getNameDone);
-				
-				
-				
-				
-				//get vote count of candidates
-				$getCount = "SELECT candidate_id AS CID, COUNT(DISTINCT voter_id) AS C FROM votes_for WHERE candidate_id = '" . $usgvpi[$c] ."'";
-				
-				$getCountDone = mysql_query($getCount) or die(mysql_error());
-				
-				$row = mysql_fetch_array($getCountDone);
-				
-				
-				echo $name['FULL'];
-				
-				echo " - ";
-				
-				echo $row['C'];
-				echo "<br>";
-				
-			}
-			
-		?>
-		
-		<h4> VP Externals </h4>
-		
-		<?php 
-		
-			//counter
-			$i = 0; 
-			
-			$usgvpe = array();
-			
-			//get candidates for VP Externals
-			$getCandidates = "SELECT voter_id AS ID FROM voter JOIN candidate ON voter.voter_id = candidate_id WHERE position LIKE 'VP Externals'";
-			
-			$getCandidatesDone = mysql_query($getCandidates) or die(mysql_error());
-			
-			while( $row = mysql_fetch_array($getCandidatesDone) )
-			{
-				$usgvpe[$i] = $row['ID'];
-				
-				$i++;
-				
-			}
-			
-			for($c = 0; $c<count($usgvpe); $c++)
-			{
-				//get candidate name
-				$getName = "SELECT CONCAT(last_name, CONCAT(', ', first_name)) AS FULL
-								FROM candidate AS C JOIN voter AS V
-								 ON C.candidate_id = V.voter_id
-								 WHERE C.candidate_id = '". $usgvpe[$c] ."'";
-				
-				$getNameDone = mysql_query($getName) or die(mysql_error());
-				
-				$name = mysql_fetch_array($getNameDone);
-				
-				
-				
-				
-				//get vote count of candidates
-				$getCount = "SELECT candidate_id AS CID, COUNT(DISTINCT voter_id) AS C FROM votes_for WHERE candidate_id = '" . $usgvpe[$c] ."'";
-				
-				$getCountDone = mysql_query($getCount) or die(mysql_error());
-				
-				$row = mysql_fetch_array($getCountDone);
-				
-				
-				echo $name['FULL'];
-				
-				echo " - ";
-				
-				echo $row['C'];
-				echo "<br>";
-				
-			}
-			
-		?>
-		
-		<h4> Executive Treasurer </h4>
-		
-		<?php 
-		
-			//counter
-			$i = 0; 
-			
-			$usgtre = array();
-			
-			//get candidates for Executive Treasurer
-			$getCandidates = "SELECT voter_id AS ID FROM voter JOIN candidate ON voter.voter_id = candidate_id WHERE position LIKE 'Executive Treasurer'";
-			
-			$getCandidatesDone = mysql_query($getCandidates) or die(mysql_error());
-			
-			while( $row = mysql_fetch_array($getCandidatesDone) )	
-			{
-				$usgtre[$i] = $row['ID'];
-				
-				$i++;
-				
-			}
-			
-			for($c = 0; $c<count($usgtre); $c++)
-			{
-				//get candidate name
-				$getName = "SELECT CONCAT(last_name, CONCAT(', ', first_name)) AS FULL
-								FROM candidate AS C JOIN voter AS V
-								 ON C.candidate_id = V.voter_id
-								 WHERE C.candidate_id = '". $usgtre[$c] ."'";
-				
-				$getNameDone = mysql_query($getName) or die(mysql_error());
-				
-				$name = mysql_fetch_array($getNameDone);
-				
-				
-				
-				
-				//get vote count of candidates
-				$getCount = "SELECT candidate_id AS CID, COUNT(DISTINCT voter_id) AS C FROM votes_for WHERE candidate_id = '" . $usgtre[$c] ."'";
-				
-				$getCountDone = mysql_query($getCount) or die(mysql_error());
-				
-				$row = mysql_fetch_array($getCountDone);
-				
-				
-				echo $name['FULL'];
-				
-				echo " - ";
-				
-				echo $row['C'];
-				echo "<br>";
-				
-			}
-			
-		?>
-		
-		<h4> Executive Secretary </h4>
-		
-		<?php 
-		
-			//counter
-			$i = 0; 
-			
-			$usgsec = array();
-			
-			//get candidates for Executive Secretary
-			$getCandidates = "SELECT voter_id AS ID FROM voter JOIN candidate ON voter.voter_id = candidate_id WHERE position LIKE 'Executive Secretary'";
-			
-			$getCandidatesDone = mysql_query($getCandidates) or die(mysql_error());
-			
-			while( $row = mysql_fetch_array($getCandidatesDone) )	
-			{
-				$usgsec[$i] = $row['ID'];
-				
-				$i++;
-				
-			}
-			
-			for($c = 0; $c<count($usgsec); $c++)
-			{
-				//get candidate name
-				$getName = "SELECT CONCAT(last_name, CONCAT(', ', first_name)) AS FULL
-								FROM candidate AS C JOIN voter AS V
-								 ON C.candidate_id = V.voter_id
-								 WHERE C.candidate_id = '". $usgsec[$c] ."'";
-				
-				$getNameDone = mysql_query($getName) or die(mysql_error());
-				
-				$name = mysql_fetch_array($getNameDone);
-				
-				
-				
-				
-				//get vote count of candidates
-				$getCount = "SELECT candidate_id AS CID, COUNT(DISTINCT voter_id) AS C FROM votes_for WHERE candidate_id = '" . $usgsec[$c] ."'";
-				
-				$getCountDone = mysql_query($getCount) or die(mysql_error());
-				
-				$row = mysql_fetch_array($getCountDone);
-				
-				
-				echo $name['FULL'];
-				
-				echo " - ";
-				
-				echo $row['C'];
-				echo "<br>";
-				
-			}
-			
-		?>
-		
-		<h4> STC President </h4>
-		
-		<?php 
-		
-			//counter
-			$i = 0; 
-			
-			$stcpre = array();
-			
-			//get candidates for STC President
-			$getCandidates = "SELECT voter_id AS ID FROM voter JOIN candidate ON voter.voter_id = candidate_id WHERE position LIKE 'STC President'";
-			
-			$getCandidatesDone = mysql_query($getCandidates) or die(mysql_error());
-			
-			while( $row = mysql_fetch_array($getCandidatesDone) )	
-			{
-				$stcpre[$i] = $row['ID'];
-				
-				$i++;
-				
-			}
-			
-			for($c = 0; $c<count($stcpre); $c++)
-			{
-				//get candidate name
-				$getName = "SELECT CONCAT(last_name, CONCAT(', ', first_name)) AS FULL
-								FROM candidate AS C JOIN voter AS V
-								 ON C.candidate_id = V.voter_id
-								 WHERE C.candidate_id = '". $stcpre[$c] ."'";
-				
-				$getNameDone = mysql_query($getName) or die(mysql_error());
-				
-				$name = mysql_fetch_array($getNameDone);
-				
-				
-				
-				
-				//get vote count of candidates
-				$getCount = "SELECT candidate_id AS CID, COUNT(DISTINCT voter_id) AS C FROM votes_for WHERE candidate_id = '" . $stcpre[$c] ."'";
-				
-				$getCountDone = mysql_query($getCount) or die(mysql_error());
-				
-				$row = mysql_fetch_array($getCountDone);
-				
-				
-				echo $name['FULL'];
-				
-				echo " - ";
-				
-				echo $row['C'];
-				echo "<br>";
-				
-			}
-			
-		?>
-		
-		<h4> Legislative Assembly Representative </h4>
-		
-		<?php 
-		
-			//counter
-			$i = 0; 
-			
-			$stcla = array();
-			
-			//get candidates for Legislative Assembly Representative 
-			$getCandidates = "SELECT voter_id AS ID FROM voter JOIN candidate ON voter.voter_id = candidate_id WHERE position LIKE 'Legislative Assembly Representative'";
-			
-			$getCandidatesDone = mysql_query($getCandidates) or die(mysql_error());
-			
-			while( $row = mysql_fetch_array($getCandidatesDone) )	
-			{
-				$stcla[$i] = $row['ID'];
-				
-				$i++;
-				
-			}
-			
-			for($c = 0; $c<count($stcla); $c++)
-			{
-				//get candidate name
-				$getName = "SELECT CONCAT(last_name, CONCAT(', ', first_name)) AS FULL
-								FROM candidate AS C JOIN voter AS V
-								 ON C.candidate_id = V.voter_id
-								 WHERE C.candidate_id = '". $stcla[$c] ."'";
-				
-				$getNameDone = mysql_query($getName) or die(mysql_error());
-				
-				$name = mysql_fetch_array($getNameDone);
-				
-				
-				
-				
-				//get vote count of candidates
-				$getCount = "SELECT candidate_id AS CID, COUNT(DISTINCT voter_id) AS C FROM votes_for WHERE candidate_id = '" . $stcla[$c] ."'";
-				
-				$getCountDone = mysql_query($getCount) or die(mysql_error());
-				
-				$row = mysql_fetch_array($getCountDone);
-				
-				
-				echo $name['FULL'];
-				
-				echo " - ";
-				
-				echo $row['C'];
-				echo "<br>";
-				
-			}
-			
-		?>
-		
-		<h4> College Representatives </h4>
-		
-		<?php 
-		
-			//counter
-			$i = 0; 
-			
-			$stccolrep = array();
-			$col = array();
-			
-			//get candidates for COLLEGE Representative 
-			$getCandidates = "SELECT voter_id AS ID, position AS POS FROM voter JOIN candidate ON voter.voter_id = candidate_id WHERE position LIKE '% Representative' AND position NOT LIKE 'Legislative %'";
-			
-			$getCandidatesDone = mysql_query($getCandidates) or die(mysql_error());
-			
-			while( $row = mysql_fetch_array($getCandidatesDone) )	
-			{
-				$stccolrep[$i] = $row['ID'];
-				$col[$i] = $row['POS'];
-				$i++;
-				
-			}
-			
-			for($c = 0; $c<count($stccolrep); $c++)
-			{
-				//get candidate name
-				$getName = "SELECT CONCAT(last_name, CONCAT(', ', first_name)) AS FULL
-								FROM candidate AS C JOIN voter AS V
-								 ON C.candidate_id = V.voter_id
-								 WHERE C.candidate_id = '". $stccolrep[$c] ."'";
-				
-				$getNameDone = mysql_query($getName) or die(mysql_error());
-				
-				$name = mysql_fetch_array($getNameDone);
-				
-				
-				
-				
-				//get vote count of candidates
-				$getCount = "SELECT candidate_id AS CID, COUNT(DISTINCT voter_id) AS C FROM votes_for WHERE candidate_id = '" . $stccolrep[$c] ."'";
-				
-				$getCountDone = mysql_query($getCount) or die(mysql_error());
-				
-				$row = mysql_fetch_array($getCountDone);
-				
-				
-				echo $name['FULL'];
-				
-				echo "(" . $col[$c] . ")";
-				
-				echo " - ";
-				
-				echo $row['C'];
-				echo "<br>";
-				
-			}
-			
-		?>
-	</center>
+	<table class="table">
+		<tr>
+			<th>College Representative</th>
+			<th>Abstains</th>
+		</tr>
+
+		<?php foreach($stc_college_rep_abstain as $single_abstain) :?>
+			<tr>
+				<td><?php echo $single_abstain['name']; ?></td>
+				<td><?php echo $single_abstain['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>	
+</div>

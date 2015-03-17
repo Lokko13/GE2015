@@ -71,10 +71,9 @@ class Abstain_Model extends CI_Model{
 	}
 
 	function _getNumberOfAbstainOn($position){
-		return;
+		$this->db->where('position', $position);
+		$q = $this->db->get('abstain_tbl');
+		return $q->num_rows;
 	}
 
-	function _getNumberOfAbstainVotes(){
-		return;
-	}
 }

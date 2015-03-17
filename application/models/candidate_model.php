@@ -7,7 +7,7 @@ class Candidate_Model extends CI_Model{
 	}
 
 	function _getCandidatesFor($position){
-		$query = "SELECT candidate.candidate_id AS ID, voter.first_name AS FName, voter.last_name AS LName, party.party_id AS porder
+		$query = "SELECT DISTINCT candidate.candidate_id AS ID, voter.first_name AS FName, voter.last_name AS LName, party.party_id AS porder
 					FROM voter, candidate, party_candidate, party
 					WHERE voter.voter_id = candidate.candidate_id
 						AND candidate.candidate_id = party_candidate.candidate_id
@@ -88,6 +88,12 @@ class Candidate_Model extends CI_Model{
 		}
 
 		return $candidate_list;
+	}
+
+	function _numberOfVotesFor($id){
+		$this->db->where('candidate_id', $id);
+		$q = $this->db->get('votes_for');
+		return $q->num_rows();
 	}
 
 	function _addCandidate(){

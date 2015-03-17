@@ -99,6 +99,17 @@ class Voter_Model extends CI_Model{
 		return $processed;
 	}
 
+	function _getTotalVotes(){
+		$this->db->where('isVoted', 'Y');
+		$q = $this->db->get('voter');
+		return  $q->num_rows();
+	}
+
+	function _getTotalVoters(){
+		$q = $this->db->get('voter');
+		return  $q->num_rows();
+	}
+
 	function _addVoter(){
 		return;
 	}
