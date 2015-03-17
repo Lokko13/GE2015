@@ -17,6 +17,16 @@ class Active_Sessions_Model extends CI_Model{
 		return;
 	}
 
+	function _updateSession($id){
+		$arr = array(
+			'session_ip_address' => $_SERVER['REMOTE_ADDR'],
+			'timestamp' => time()
+		);
+		$this->db->where('session_id', md5($id));
+		$this->db->where('user_id', $id);
+		$this->db->update('active_sessions', $arr);
+	}
+
 	function _removeSession($id){
 		$this->db->where('session_id', md5($id));
 		$this->db->where('user_id', $id);
@@ -26,6 +36,13 @@ class Active_Sessions_Model extends CI_Model{
 	function _getActiveSessions(){
 		$q = $this->db->get('active_sessions');
 		return $q->result();
+	}
+
+	function _getSession($id){
+		$this->db->where('session_id', md5($id));
+		$this->db->where('user_id', $id);
+		$q = $this->db->get('active_sessions');
+		return $q->row();	
 	}
 
 	function _isSessionActive($id){
