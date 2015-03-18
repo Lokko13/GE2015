@@ -22,6 +22,19 @@ class Voter_Model extends CI_Model{
 		}
 	}
 
+	function _totalVotersOf($college){ //voters
+		$this->db->where('college', $college);
+		$q = $this->db->get('voter');
+		return $q->num_rows();
+	}
+
+	function _totalVotesOf($college){ //votes
+		$this->db->where('college', $college);	
+		$this->db->where('isVoted', "Y");
+		$q = $this->db->get('voter');
+		return $q->num_rows();
+	}
+
 	function _isVoted($id){
 		//filter with id
 		$row = $this->_getVoter($id);

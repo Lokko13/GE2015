@@ -24,8 +24,7 @@ class Admin extends CI_Controller {
 	function index(){
 		$data['main_content'] = 'admin_home_view';
 		$data['admin_name'] = $this->_getAdminName();
-		$data['totalVotes'] = $this->_getTotalVotes();
-		$data['totalVoters'] = $this->_getTotalVoters();
+		$data['voteSummary'] = $this->_getVoteSummary();
 		//vote tally
 		$data['usg_pres_votes'] = $this->_getVotesFor('USG President');		
 		$data['usg_vp_internal_votes'] = $this->_getVotesFor('VP Internals');
@@ -109,29 +108,44 @@ class Admin extends CI_Controller {
 	}
 
 	//FUNCTION TO GET TALLY OF VOTES
-	function _gettotalVotes(){
+	function _getVoteSummary(){ // votes summary isn't dynamic, more on hard coded and i feel bad
 		$this->load->model('voter_model');
-		return $this->voter_model->_getTotalVotes();
-	}
-
-	function _gettotalVoters(){
-		$this->load->model('voter_model');
-		return $this->voter_model->_getTotalVoters();
+		$arr = array(
+			'totalVotes' => $this->voter_model->_getTotalVotes(),
+			'totalVoters' => $this->voter_model->_getTotalVoters(),
+			//CCS
+			'CCStotalVoters' => $this->voter_model->_totalVotersOf('CCS'),
+			'CCStotalVotes' => $this->voter_model->_totalVotesOf('CCS'),
+			//CLA
+			'CLAtotalVoters' => $this->voter_model->_totalVotersOf('CLA'),
+			'CLAtotalVotes' => $this->voter_model->_totalVotesOf('CLA'),
+			//COB
+			'COBtotalVoters' => $this->voter_model->_totalVotersOf('RVR-COB'),
+			'COBtotalVotes' => $this->voter_model->_totalVotesOf('RVR-COB'),
+			//COE
+			'COEtotalVoters' => $this->voter_model->_totalVotersOf('GCOE'),
+			'COEtotalVotes' => $this->voter_model->_totalVotesOf('GCOE'),
+		);
+		//should array_push for each exissting school
+		return $arr;
 	}
 
 	function _getVotesFor($position){
 		$arr = array();
 		$this->load->model('voter_model');
 		$this->load->model('candidate_model');
+		$this->load->model('party_model');
 
 		$candidates = $this->candidate_model->_getCandidatesFor($position);
 
 		//for existing candidates
 		foreach($candidates as $candidate){
 			$details = $this->voter_model->_getVoter($candidate->ID);
+			$p = $this->party_model->_getCandidateParty($candidate->ID);
 			$x = array(
 				'name' => $details->first_name . " " . $details->last_name,
-				'votes' => $this->candidate_model->_numberOfVotesFor($candidate->ID)
+				'votes' => $this->candidate_model->_numberOfVotesFor($candidate->ID),
+				'party' => $p->party_name
 			);
 			array_push($arr, $x);
 		}
@@ -139,7 +153,7 @@ class Admin extends CI_Controller {
 		//for abstain votes
 		$this->load->model('abstain_model');
 		$x = array(
-			'name' => 'abstain',
+			'name' => 'Abstains',
 			'votes' => $this->abstain_model->_getNumberOfAbstainOn($position)
 		);
 		array_push($arr, $x);
@@ -152,6 +166,7 @@ class Admin extends CI_Controller {
 		$this->load->model('voter_model');
 		$this->load->model('candidate_model');
 		$this->load->model('abstain_model');
+		$this->load->model('party_model');
 
 		$candidates = $this->candidate_model->_getCandidatesFor('%Representative');
 
@@ -159,13 +174,15 @@ class Admin extends CI_Controller {
 		foreach($candidates as $candidate){
 			//candidate
 			$c = $this->candidate_model->_getCandidate($candidate->ID);
+			$p = $this->party_model->_getCandidateParty($candidate->ID);
 			//get all except LA rep
 			if($c->position != "Legislative Assembly Representative"){
 				$details = $this->voter_model->_getVoter($candidate->ID);
 				$x = array(
 					'name' => $details->first_name . " " . $details->last_name,
 					'votes' => $this->candidate_model->_numberOfVotesFor($candidate->ID),
-					'position' => $c->position
+					'position' => $c->position,
+					'party' => $p->party_name
 				);
 				array_push($arr, $x);	
 			}
@@ -185,13 +202,14 @@ class Admin extends CI_Controller {
 		foreach($candidates as $candidate){
 			//candidate
 			$c = $this->candidate_model->_getCandidate($candidate->ID);
+
 			//get all except LA rep
 			if($c->position != "Legislative Assembly Representative"){
 				$abstains = $this->abstain_model->_getNumberOfAbstainOn($c->position);
 
 				$x = array(
 					'name' => $c->position,
-					'votes' => $abstains,
+					'votes' => $abstains
 				);
 				array_push($arr, $x);	
 			}

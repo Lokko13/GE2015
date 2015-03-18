@@ -1,3 +1,4 @@
+<!-- this whole view feels hardcoded -->
 <div class="navbar">
     <div class="navbar-inner">
 		<div class="container-fluid">
@@ -46,156 +47,211 @@
 </div>
 <!--/.navbar -->
 
-<div class="row-fluid">
-	<h1>USG GENERAL ELECTIONS 2015</h1>
-			
-	<h5>TOTAL VOTES CASTED : <?php echo $totalVotes;?> </h5>
-	<h5>TOTAL VOTERS : <?php echo $totalVoters;?> </h5>
-	<hr />	
-			
-	<h4> USG President </h4>
-	<table class="table">
+<center>
+	<table id="voteTable">
 		<tr>
-			<th>Candidate Name</th>
-			<th>Votes</th>
+			<td colspan="4">
+				<h1>
+					USG GENERAL ELECTIONS 2015
+				</h1>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<h2> VOTES SUMMARY </h2> <!-- votes summary isn't dynamic, more on hard coded and i feel bad -->
+			</td>
+		</tr>
+		<tr>
+			<td colspan='2'>Votes / Total Voters:</td>
+			<td><?php echo $voteSummary['totalVotes'] . " / " . $voteSummary['totalVoters']; ?> </td>
 		</tr>
 
-		<?php foreach($usg_pres_votes as $single_vote) :?>
+		<tr>
+			<td colspan='2'>CCS Votes / Total CCS Voters:</td>
+			<td><?php echo $voteSummary['CCStotalVotes'] . " / " . $voteSummary['CCStotalVoters']; ?> </td>
+		</tr>
+
+		<tr>
+			<td colspan='2'>RVR-COB Votes / Total RVR-COB Voters:</td>
+			<td><?php echo $voteSummary['COBtotalVotes'] . " / " . $voteSummary['COBtotalVoters']; ?> </td>
+		</tr>
+
+		<tr>
+			<td colspan='2'>CLA Votes / Total CLA Voters:</td>
+			<td><?php echo $voteSummary['CLAtotalVotes'] . " / " . $voteSummary['CLAtotalVoters']; ?> </td>
+		</tr>
+
+		<tr>
+			<td colspan='2'>GCOE Votes / Total GCOE Voters:</td>
+			<td><?php echo $voteSummary['COEtotalVotes'] . " / " . $voteSummary['COEtotalVoters']; ?> </td>
+		</tr>
+		
+		<tr>
+			<td colspan="3">
+				<h4> USG President </h4>
+			</td>
+		</tr>
+		
+		<?php foreach($usg_pres_votes as $x) :?>
 			<tr>
-				<td><?php echo $single_vote['name']; ?></td>
-				<td><?php echo $single_vote['votes']; ?></td>
+				<?php if($x['name'] == "Abstains") : ?>
+					<td><?php echo $x['name']; ?></td>
+					<td></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php else :?>
+					<td><?php echo $x['party']; ?></td>
+					<td><?php echo $x['name']; ?></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php endif; ?>
+			</tr>
+		<?php endforeach;?>
+
+		<tr>
+			<td colspan="3">
+				<h4> VP Internals </h4>
+			</td>
+		</tr>
+
+		<?php foreach($usg_vp_internal_votes as $x) :?>
+			<tr>
+				<?php if($x['name'] == "Abstains") : ?>
+					<td><?php echo $x['name']; ?></td>
+					<td></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php else :?>
+					<td><?php echo $x['party']; ?></td>
+					<td><?php echo $x['name']; ?></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php endif; ?>
+			</tr>
+		<?php endforeach;?>
+
+		<tr>
+			<td colspan="3">
+				<h4> VP Externals </h4>
+			</td>
+		</tr>
+
+		<?php foreach($usg_vp_external_votes as $x) :?>
+			<tr>
+				<?php if($x['name'] == "Abstains") : ?>
+					<td><?php echo $x['name']; ?></td>
+					<td></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php else :?>
+					<td><?php echo $x['party']; ?></td>
+					<td><?php echo $x['name']; ?></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php endif; ?>
+			</tr>
+		<?php endforeach;?>
+		
+		<tr>
+			<td colspan="3">
+				<h4> Executive Treasurer </h4>
+			</td>
+		</tr>
+		
+		<?php foreach($usg_treasurer_votes as $x) :?>
+			<tr>
+				<?php if($x['name'] == "Abstains") : ?>
+					<td><?php echo $x['name']; ?></td>
+					<td></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php else :?>
+					<td><?php echo $x['party']; ?></td>
+					<td><?php echo $x['name']; ?></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php endif; ?>
+			</tr>
+		<?php endforeach;?>
+
+		<tr>
+			<td colspan="3">
+				<h4> Executive Secretary </h4>
+			</td>
+		</tr>
+		
+		<?php foreach($usg_secretary_votes as $x) :?>
+			<tr>
+				<?php if($x['name'] == "Abstains") : ?>
+					<td><?php echo $x['name']; ?></td>
+					<td></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php else :?>
+					<td><?php echo $x['party']; ?></td>
+					<td><?php echo $x['name']; ?></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php endif; ?>
+			</tr>
+		<?php endforeach;?>
+		
+		<tr>
+			<td colspan="3">
+				<h4> STC President </h4>
+			</td>
+		</tr>
+		
+		<?php foreach($stc_campus_pres_votes as $x) :?>
+			<tr>
+				<?php if($x['name'] == "Abstains") : ?>
+					<td><?php echo $x['name']; ?></td>
+					<td></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php else :?>
+					<td><?php echo $x['party']; ?></td>
+					<td><?php echo $x['name']; ?></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php endif; ?>
+			</tr>
+		<?php endforeach;?>
+
+		<tr>
+			<td colspan="3">
+				<h4> Legislative Assembly Representative </h4>
+			</td>
+		</tr>
+		
+		<?php foreach($stc_la_rep_votes as $x) :?>
+			<tr>
+				<?php if($x['name'] == "Abstains") : ?>
+					<td><?php echo $x['name']; ?></td>
+					<td></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php else :?>
+					<td><?php echo $x['party']; ?></td>
+					<td><?php echo $x['name']; ?></td>
+					<td><?php echo $x['votes']; ?></td>
+				<?php endif; ?>
+			</tr>
+		<?php endforeach;?>
+
+		<tr>
+			<td colspan="3">
+				<h4> College Representatives </h4>
+			</td>
+		</tr>
+		
+		<?php foreach($stc_college_rep_votes as $x) :?>
+			<tr>
+				<td><?php echo $x['party']; ?></td>
+				<td><?php echo $x['name'] . "(" . $x['position'] . ")"; ?></td>
+				<td><?php echo $x['votes']; ?></td>
+			</tr>
+		<?php endforeach;?>
+			
+		<tr>
+			<td colspan="3">
+				<h4> College Representatives Abstains</h4>
+			</td>
+		</tr>
+
+		<?php foreach($stc_college_rep_abstain as $x) :?>
+			<tr>
+				<td><?php echo $x['name']; ?></td>
+				<td></td>
+				<td><?php echo $x['votes']; ?></td>
 			</tr>
 		<?php endforeach;?>
 	</table>
-	 
-	<hr />
-	<h4> VP Internals </h4>
-	<table class="table">
-		<tr>
-			<th>Candidate Name</th>
-			<th>Votes</th>
-		</tr>
-
-		<?php foreach($usg_vp_internal_votes as $single_vote) :?>
-			<tr>
-				<td><?php echo $single_vote['name']; ?></td>
-				<td><?php echo $single_vote['votes']; ?></td>
-			</tr>
-		<?php endforeach;?>
-	</table>
-
-	<hr />
-	<h4> VP Externals </h4>
-	<table class="table">
-		<tr>
-			<th>Candidate Name</th>
-			<th>Votes</th>
-		</tr>
-
-		<?php foreach($usg_vp_external_votes as $single_vote) :?>
-			<tr>
-				<td><?php echo $single_vote['name']; ?></td>
-				<td><?php echo $single_vote['votes']; ?></td>
-			</tr>
-		<?php endforeach;?>
-	</table>
-			
-	<hr />
-	<h4> Executive Treasurer </h4>
-	<table class="table">
-		<tr>
-			<th>Candidate Name</th>
-			<th>Votes</th>
-		</tr>
-
-		<?php foreach($usg_treasurer_votes as $single_vote) :?>
-			<tr>
-				<td><?php echo $single_vote['name']; ?></td>
-				<td><?php echo $single_vote['votes']; ?></td>
-			</tr>
-		<?php endforeach;?>
-	</table>
-
-	<hr />
-	<h4> Executive Secretary </h4>
-	<table class="table">
-		<tr>
-			<th>Candidate Name</th>
-			<th>Votes</th>
-		</tr>
-
-		<?php foreach($usg_secretary_votes as $single_vote) :?>
-			<tr>
-				<td><?php echo $single_vote['name']; ?></td>
-				<td><?php echo $single_vote['votes']; ?></td>
-			</tr>
-		<?php endforeach;?>
-	</table>	
-
-	<hr />		
-	<h4> STC President </h4>
-	<table class="table">
-		<tr>
-			<th>Candidate Name</th>
-			<th>Votes</th>
-		</tr>
-
-		<?php foreach($stc_campus_pres_votes as $single_vote) :?>
-			<tr>
-				<td><?php echo $single_vote['name']; ?></td>
-				<td><?php echo $single_vote['votes']; ?></td>
-			</tr>
-		<?php endforeach;?>
-	</table>	
-
-	<hr />		
-	<h4> Legislative Assembly Representative </h4>
-	<table class="table">
-		<tr>
-			<th>Candidate Name</th>
-			<th>Votes</th>
-		</tr>
-
-		<?php foreach($stc_la_rep_votes as $single_vote) :?>
-			<tr>
-				<td><?php echo $single_vote['name']; ?></td>
-				<td><?php echo $single_vote['votes']; ?></td>
-			</tr>
-		<?php endforeach;?>
-	</table>	
-			
-	<hr />
-	<h4> College Representatives </h4>
-			
-	<table class="table">
-		<tr>
-			<th>Candidate Name</th>
-			<th>Votes</th>
-			<th>Position</th>
-		</tr>
-
-		<?php foreach($stc_college_rep_votes as $single_vote) :?>
-			<tr>
-				<td><?php echo $single_vote['name']; ?></td>
-				<td><?php echo $single_vote['votes']; ?></td>
-				<td><?php echo $single_vote['position']; ?></td>
-			</tr>
-		<?php endforeach;?>
-	</table>	
-
-	<h4> College Representatives Abstains </h4>
-			
-	<table class="table">
-		<tr>
-			<th>College Representative</th>
-			<th>Abstains</th>
-		</tr>
-
-		<?php foreach($stc_college_rep_abstain as $single_abstain) :?>
-			<tr>
-				<td><?php echo $single_abstain['name']; ?></td>
-				<td><?php echo $single_abstain['votes']; ?></td>
-			</tr>
-		<?php endforeach;?>
-	</table>	
-</div>
+</center>
