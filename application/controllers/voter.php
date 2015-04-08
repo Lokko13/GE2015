@@ -42,9 +42,12 @@ class Voter extends CI_Controller {
 		$data['stc_college_rep'] = $this->_get_STC_CollegeRep($this->session->userdata('college'));
 		$data['stc_la_rep'] = $this->candidate_model->_getCandidatesFor('Legislative Assembly Representative');
 
-		$this->load->view('includes/template', $data);
+		$this->load->view('includes/template', $data); //load view with the existing data in the previos lines
 	}
 
+	/*
+	this function generates the student name based on the browser session id
+	*/
 	function _getStudentName($id){
 		$voter = $this->voter_model->_getVoter($id);
 		$fname = $voter->first_name;
@@ -52,6 +55,9 @@ class Voter extends CI_Controller {
 		return "$fname $lname";
 	}
 
+	/*
+	this function is called when the vote is cast
+	*/
 	function submitVote(){
 		$this->voter_model->_Vote($this->session->userdata('id'), $this->input->post());
 		//logout the user

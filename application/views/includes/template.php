@@ -1,3 +1,4 @@
+<!-- template layout of each page -->
 <?php $this->load->view('includes/header'); ?>
 
 <?php $this->load->view($main_content); ?>

@@ -1,7 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
- * Controller class for logout
- * @author Carlo Carabeo
+ redirect here to properlly logout session
  */
 class Logout extends CI_Controller{
 	//destroys all session data then redirects to login page

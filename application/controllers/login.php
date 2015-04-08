@@ -24,6 +24,9 @@ class Login extends CI_Controller {
 		$this->load->view('includes/template', $data);
 	}
 
+	/*
+	form submit function validates the input and redirects accordingly
+	*/
 	public function signInSubmit(){
 		//form validation rules
 		$this->form_validation->set_rules('inputStudentID','Student ID','trim|required|xss_clean');
@@ -40,15 +43,15 @@ class Login extends CI_Controller {
 			if($this->admin_model->_authenticate($id, $pass)){//authenticate if user is an admin
 				//check if there is an active session
 				if( $this->active_sessions_model->_isSessionActive($id) ){
-					//refresh session
+					//refresh session in db
 					$this->active_sessions_model->_updateSession($id);
-					//unset session data to be consistent
+					//refresh browser session
 					$this->session->unset_userdata('id');
 					$this->session->unset_userdata('is_logged_in');	
 					$this->session->unset_userdata('is_admin');	
 					$this->session->unset_userdata('college');
 
-					//create session;
+					//re-create session;
 					$admin_sess = array(
 						'id' => $id,
 						'is_logged_in' => true,
@@ -56,7 +59,7 @@ class Login extends CI_Controller {
 					);
 					$this->session->set_userdata($admin_sess);//set sessiondata
 				}
-				else{
+				else{ //if there are no active sessions in the db (Fresh login)
 					//create session;
 					$admin_sess = array(
 						'id' => $id,
@@ -71,14 +74,15 @@ class Login extends CI_Controller {
 			else if($this->voter_model->_authenticate($id, $pass)){//authenticate if user is a voter
 				//check if user is still valid for voting
 				if(!$this->voter_model->_isVoted($id)){
+					
+					//check if there is a currenlty active session with this id then redirect back to login with the error
 					if( $this->active_sessions_model->_isSessionActive($id) ){
-						//refresh session
 						$this->session->set_flashdata('login_error', 'This ID already has an active session running. Please try again If this error persist contact a comelec officer');
 						$existing_sess = $this->active_sessions_model->_getSession($id);
 						
-						if( $_SERVER['REMOTE_ADDR'] == $existing_sess->session_ip_address){
-							$this->active_sessions_model->_removeSession($id);
-
+						//if the existing session has the same ip address
+						if( $_SERVER['REMOTE_ADDR'] == $existing_sess->session_ip_address){ 
+							$this->active_sessions_model->_removeSession($id);//remove db session and uset browser session
 							//unset current session semi-logout
 							$this->session->unset_userdata('id');
 							$this->session->unset_userdata('is_logged_in');	
@@ -91,9 +95,10 @@ class Login extends CI_Controller {
 							redirect('login');	
 						}
 					}
-					else{
+					else{ //valid user and no active sessions running wit the id
 						//get voter details
-						$voter = $this->voter_model->_getVoter($id);
+						$voter = $this->voter_model->_getVoter($id); //get voter details
+						
 						//save voter session
 						$voter_sess = array(
 							'id' => $voter->voter_id,
@@ -106,17 +111,17 @@ class Login extends CI_Controller {
 						redirect('voter');//go to voter homepage	
 					}
 				}
-				else{
+				else{ //isVoted == "Y"
 					$this->session->set_flashdata('login_error', 'This ID has already voted!');
 					redirect($this);
 				}
 			}
-			else{//user doesnt exit
+			else{//user doesnt exist
 				$this->session->set_flashdata('login_error', 'Incorrect ID or password! Please contact a comelec official');
 				redirect($this);
 			}
 		}
-		else{
+		else{ //invalid form
 			$this->session->set_flashdata('login_error', validation_errors());
 			redirect($this);
 		}

@@ -6,6 +6,9 @@ class Candidate_Model extends CI_Model{
 		parent::__construct();
 	}
 
+	/*
+	This function returns all the candidates for a given position
+	*/
 	function _getCandidatesFor($position){
 		$query = "SELECT DISTINCT candidate.candidate_id AS ID, voter.first_name AS FName, voter.last_name AS LName, party.party_id AS porder
 					FROM voter, candidate, party_candidate, party
@@ -20,8 +23,10 @@ class Candidate_Model extends CI_Model{
 		return $q->result();
 	}
 
+	/*
+	This function returns the college representatives of the given $colege
+	*/
 	function _getCollegeRep($college){
-		
 		//remove this switch case pag na fix na db, retrieve nalang sana using yun ID tas dun base yun $voterCollege
 		switch($college){
 			case "CCS" : 
@@ -58,14 +63,18 @@ class Candidate_Model extends CI_Model{
 		return $q->result();
 	}
 
+	/*
+	this function returns the candidate that matches the id
+	*/
 	function _getCandidate($id){
-		$this->load->model('voter_model');
-
 		$this->db->where('candidate_id', $id);
 		$q = $this->db->get('candidate');
 		return $q->row();	
 	}
 
+	/*
+	returns all the candidates with their respective details
+	*/
 	function _getAllCandidates(){
 		$candidate_list = array();
 
@@ -75,6 +84,7 @@ class Candidate_Model extends CI_Model{
 		$this->load->model('voter_model');
 		$this->load->model('party_model');
 
+		//assign candidate details on their id that matches the voter table
 		foreach($candidates as $candid){
 			$x = $this->voter_model->_getVoter($candid->candidate_id);
 			$party = $this->party_model->_getCandidateParty($candid->candidate_id);
@@ -96,10 +106,16 @@ class Candidate_Model extends CI_Model{
 		return $q->num_rows();
 	}
 
+	/*
+	TODO
+	*/
 	function _addCandidate(){
 		return;
 	}
 
+	/*
+	TODO
+	*/
 	function _removeCandidate(){
 		return;
 	}

@@ -6,6 +6,9 @@ class Voter_Model extends CI_Model{
 		parent::__construct();
 	}
 
+	/*
+	this function authenticates if the login credentials are valid for a voter
+	*/
 	function _authenticate($id, $pass){
 		//fitler user input
 		$this->db->where('voter_id', $id);
@@ -22,12 +25,18 @@ class Voter_Model extends CI_Model{
 		}
 	}
 
+	/*
+	This function returns the total number of voters of a given college 
+	*/
 	function _totalVotersOf($college){ //voters
 		$this->db->where('college', $college);
 		$q = $this->db->get('voter');
 		return $q->num_rows();
 	}
 
+	/*
+	This function returns the casted votes of a given $college
+	*/
 	function _totalVotesOf($college){ //votes
 		$this->db->where('college', $college);	
 		$this->db->where('isVoted', "Y");
@@ -35,6 +44,9 @@ class Voter_Model extends CI_Model{
 		return $q->num_rows();
 	}
 
+	/*
+	this function returns if the given $id has already voted
+	*/
 	function _isVoted($id){
 		//filter with id
 		$row = $this->_getVoter($id);
@@ -47,12 +59,18 @@ class Voter_Model extends CI_Model{
 		}
 	}
 
+	/*
+	this function returns the voter that matches the $id
+	*/
 	function _getVoter($id){
 		$this->db->where('voter_id', $id);
 		$q = $this->db->get('voter');
 		return $q->row();	
 	}
 
+	/*
+	This function is called when the users cast their vote
+	*/
 	function _Vote($curr_user, $postdata){
 		//abstain vote values
 		$abstain_val = array('pabstain', 'viabstain', 'veabstain', 'tabstain', 'sabstain', 'cpabstain', 'crabstain', 'la1Abstain', 'la2Abstain');
@@ -96,6 +114,9 @@ class Voter_Model extends CI_Model{
 		$this->db->update('voter', array('isVoted' => 'Y'));
 	}
 
+	/*
+	pre process votes ino a single dimension array
+	*/
 	function _preProcessVotes($data){
 		$processed = array();
 
@@ -112,21 +133,33 @@ class Voter_Model extends CI_Model{
 		return $processed;
 	}
 
+	/*
+	This funnction returns the total number of casted votes
+	*/
 	function _getTotalVotes(){
 		$this->db->where('isVoted', 'Y');
 		$q = $this->db->get('voter');
 		return  $q->num_rows();
 	}
 
+	/*
+	This function returns the total number of voters
+	*/
 	function _getTotalVoters(){
 		$q = $this->db->get('voter');
 		return  $q->num_rows();
 	}
 
+	/*
+	TODO
+	*/
 	function _addVoter(){
 		return;
 	}
 
+	/*
+	TODO
+	*/
 	function _removeVoter(){
 		return;
 	}

@@ -39,6 +39,9 @@ class Admin extends CI_Controller {
 		$this->load->view('includes/template', $data);
 	}
 
+	/*
+	function that gets all the active sessions in the db. Loads active sessions admin tools view
+	*/
 	function ActiveSessions(){
 		$this->load->model('active_sessions_model');
 		$data['main_content'] = 'admin_activesessions_view';
@@ -47,8 +50,12 @@ class Admin extends CI_Controller {
 		$this->load->view('includes/template', $data);	
 	}
 
+	/*
+	function that loads the management tools home by default. Loads content depending on the 3rd segment of uri
+	*/
 	function ManagementTools(){
 		switch($this->uri->segment(3)){ // gets string after "managementtools" segment in url
+			//load content based on case
 			case 'viewAdmin' : 
 				$this->load->model('admin_model');
 				$data['all_admin'] = $this->admin_model->_getAllAdmin();
@@ -95,12 +102,18 @@ class Admin extends CI_Controller {
 		$this->load->view('includes/template', $data);	
 	}
 
+	/*
+	function that loads the voter tools view
+	*/
 	function VoterTools(){
 		$data['main_content'] = 'admin_votertools_home_view';
 		$data['admin_name'] = $this->_getAdminName();
 		$this->load->view('includes/template', $data);	
 	}
 
+	/*
+	function that returns the currently logged in admin's name
+	*/
 	function _getAdminName(){
 		$this->load->model('admin_model');
 		$x = $this->admin_model->_getAdmin($this->session->userdata('id'));
@@ -108,7 +121,11 @@ class Admin extends CI_Controller {
 	}
 
 	//FUNCTION TO GET TALLY OF VOTES
-	function _getVoteSummary(){ // votes summary isn't dynamic, more on hard coded and i feel bad
+	
+	/*
+	function to get the total vote summary and of each college
+	*/
+	function _getVoteSummary(){ // votes summary isn't dynamic based on colleges, more on hard coded and i feel bad
 		$this->load->model('voter_model');
 		$arr = array(
 			'totalVotes' => $this->voter_model->_getTotalVotes(),
@@ -130,13 +147,16 @@ class Admin extends CI_Controller {
 		return $arr;
 	}
 
+	/*
+	function that returns an array containing the candidate an hist number of votes and party of a given position
+	*/
 	function _getVotesFor($position){
 		$arr = array();
 		$this->load->model('voter_model');
 		$this->load->model('candidate_model');
 		$this->load->model('party_model');
 
-		$candidates = $this->candidate_model->_getCandidatesFor($position);
+		$candidates = $this->candidate_model->_getCandidatesFor($position); //returns candidates for specified position
 
 		//for existing candidates
 		foreach($candidates as $candidate){
@@ -161,6 +181,9 @@ class Admin extends CI_Controller {
 		return $arr;
 	}
 
+	/*
+	function that returns an array containing the candidate an hist number of votes and party for all college reps
+	*/
 	function _getVotesForCollegeReps(){
 		$arr = array();
 		$this->load->model('voter_model');
@@ -191,6 +214,9 @@ class Admin extends CI_Controller {
 		return $arr;
 	}
 
+	/*
+	function that returns an array containing abstains for each college rep
+	*/
 	function _getAbstainForCollegeReps(){
 		$arr = array();
 		$this->load->model('candidate_model');

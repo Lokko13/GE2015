@@ -44,6 +44,7 @@ Made with Bootstrap v2.3.2
 					echo form_open('login/signInSubmit', $attr);
 				?>
 					<?php
+						//user id input attributes
 						$id_attr = array(
 							'name' => 'inputStudentID',
 							'id' => 'inputStudentID',
@@ -52,6 +53,7 @@ Made with Bootstrap v2.3.2
 							'style' => 'margin-bottom: 3px;'
 						);
 
+						//password input attributes
 						$pass_attr = array(
 							'name' => 'inputPassword',
 							'id' => 'inputPassword',

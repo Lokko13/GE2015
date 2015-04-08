@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- header of each page, includes all css and js files -->
 <html>
 <head>
 	<meta charset="utf-8"/>
@@ -10,5 +11,6 @@
 	<script type="text/javascript" src="<?php echo _js_url() . 'jquery.min.js'; ?>"></script>
 	<script type="text/javascript" src="<?php echo _js_url() . 'bootstrap.js'; ?>"></script>
 	<script type="text/javascript" src="<?php echo _js_url() . 'scripts.js'; ?>"></script>
+	<script type="text/javascript" src="<?php echo _js_url() . 'valid.js';?>"></script>
 </head>
 <body>

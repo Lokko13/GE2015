@@ -1,3 +1,4 @@
+<!-- load this view on vote success -->
 <center>
 	<div class="panel panel-default" style="width:500px;margin:100px;">
 		<div class="panel-body">
